@@ -8,8 +8,7 @@ import { serveDir } from "jsr:@std/http/file-server";
 // 1. Responde en el mismo idioma en que te hablen o escriban.
 // 2. Usa lenguaje muy sencillo (nivel básico), cero tecnicismos legales.
 // 3. Divide las instrucciones en pasos cortos y claros.
-// 4. En "respuestaVoz", escribe un resumen cálido de 2 oraciones para leerse en voz alta.
-// `;
+// 4. En "respuestaVoz", escribe un resumen cálido de 2 oraciones para leerse en voz alta. `;
 
 const systemPrompt = `
 You are "Atenea", an empathetic citizen guide for Mexico.
@@ -83,7 +82,7 @@ Deno.serve(async (req) => {
         });
     }
 
-    return new Response(await Deno.readTextFile("./public/asistente.html"), {
+    return new Response(await Deno.readTextFile("./public/index.html"), {
         headers: { "Content-Type": "text/html; charset=utf-8" }
     });
 
@@ -92,7 +91,7 @@ Deno.serve(async (req) => {
             headers: { "Content-Type": "application/manifest+json" }
     });
 }
-    // return new Response(await Deno.readTextFile("./public/asistente.html"), {
-    //     headers: { "Content-Type": "text/html; charset=utf-8" }
-    // });
+    return new Response(await Deno.readTextFile("./public/asistente.html"), {
+        headers: { "Content-Type": "text/html; charset=utf-8" }
+    });
 });
