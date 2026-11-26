@@ -4,7 +4,7 @@
 **Campus:** Reforma - San Rafael\
 **Alineación:** Objetivos de Desarrollo Sostenible (ODS) 10
 
-pagina web: https://atenea-vmoh.onrender.com/
+pagina web: https://atenea-vmoh.onrender.com/  
 descargar apk: https://github.com/AxelUVM/Atenea/releases/tag/v1.1
 
 ---
