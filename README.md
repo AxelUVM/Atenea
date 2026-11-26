@@ -2,7 +2,7 @@
 
 **Equipo:** SIEDIA  
 **Campus:** Reforma - San Rafael  
-**Alineación:** Objetivos de Desarrollo Sostenible (ODS) 10 y 11  
+**Alineación:** Objetivos de Desarrollo Sostenible (ODS) 10
 
 ---
 
