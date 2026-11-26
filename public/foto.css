@@ -1,0 +1,111 @@
+@import url("https://cdn.jsdelivr.net/gh/mshaugh/nerdfont-webfonts@v3.3.0/build/firamono-nerd-font.css");
+
+body {
+  font-family: "FiraMono Nerd Font", monospace;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f9f8f6;
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+button, select, input {
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+#btnFoto {
+  background: #ffc5d3;
+  color: #1d1d1d;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btnFoto:active {
+  background: #f58ea8;
+  transform: scale(0.97);
+}
+
+#previewFoto {
+  display: none;
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+}
+
+#estado {
+  color: #1a1a1a;
+  font-weight: bold;
+  margin: 12px 0;
+}
+
+#resultado {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+#bloqueTraduccion {
+  background: #f9f8f6;
+  padding: 14px;
+  border-left: 4px solid #ffc5d3;
+  border-radius: 6px;
+  margin: 14px 0;
+}
+
+#lblTraduccion {
+  margin-top: 0;
+}
+
+#resTraduccion {
+  white-space: pre-wrap;
+  margin-bottom: 0;
+}
+
+.encabezado-atenea {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+}
+
+.logo-atenea {
+  width: 65px;
+  height: auto;
+  object-fit: contain;
+}
+
+.textos-atenea {
+  display: flex;
+  flex-direction: column;
+}
+
+.textos-atenea h1 {
+  margin: 0;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1.1;
+}
+
+.textos-atenea p {
+  margin: 4px 0 0 0;
+  font-size: 1.05rem;
+  font-weight: 400;
+  color: #555555;
+}
