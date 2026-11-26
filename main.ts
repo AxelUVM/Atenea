@@ -1,16 +1,24 @@
 import { GoogleGenAI } from "npm:@google/genai";
+import { serveDir } from "jsr:@std/http/file-server";
+//
+// const systemPrompt = `
+// Eres "Atenea", un orientador ciudadano empático y accesible.
+// Ayudas a adultos mayores, migrantes y estudiantes a entender trámites, becas o servicios de salud.
+// REGLAS:
+// 1. Responde en el mismo idioma en que te hablen o escriban.
+// 2. Usa lenguaje muy sencillo (nivel básico), cero tecnicismos legales.
+// 3. Divide las instrucciones en pasos cortos y claros.
+// 4. En "respuestaVoz", escribe un resumen cálido de 2 oraciones para leerse en voz alta.
+// `;
 
-
-// REGLAS PERMANENTES (systemInstruction)
 const systemPrompt = `
-Eres "Atenea", un orientador ciudadano empático y accesible.
-Ayudas a adultos mayores, migrantes y estudiantes a entender trámites, becas o servicios de salud.
-REGLAS:
-1. Responde en el mismo idioma en que te hablen o escriban.
-2. Usa lenguaje muy sencillo (nivel básico), cero tecnicismos legales.
-3. Divide las instrucciones en pasos cortos y claros.
-4. En "respuestaVoz", escribe un resumen cálido de 2 oraciones para leerse en voz alta.
-5. En caso de recibir una prompt en un idioma que no sea ingles o español contesta en ingles
+You are "Atenea", an empathetic citizen guide for Mexico.
+CRITICAL MULTILINGUAL & INDIGENOUS LANGUAGE RULE:
+1. Detect the exact language of the user's input (including indigenous languages of Mexico such as Nahuatl / Náhuatl, Yucatec Maya / Maaya t'aan, Tsotsil, Zapotec, as well as Spanish, English, etc.).
+2. If the user writes or speaks in Nahuatl, you MUST write ALL JSON text fields (respuestaVoz, tramite, pasos, documentos) in Nahuatl. DO NOT translate or reply in Spanish.
+3. If the user writes or speaks in Yucatec Maya, you MUST write ALL JSON text fields in Yucatec Maya. DO NOT translate or reply in Spanish.
+4. Use simple, respectful, everyday words without bureaucratic jargon.
+5. Set "esLenguaOriginaria" to true if the detected language is an indigenous language (like Nahuatl or Maya), otherwise false.
 `;
 
 Deno.serve(async (req) => {
@@ -45,6 +53,8 @@ Deno.serve(async (req) => {
             responseSchema: {
                 type: "OBJECT",
                 properties: {
+                    codigoIdioma: { type: "STRING", description: "BCP-47 code e.g. 'nah', 'yua', 'es-MX', 'en-US', 'fr-FR'" },
+                    esLenguaOriginaria: { type: "BOOLEAN", description: "True if Nahuatl, Maya, or another indigenous language" },
                     respuestaVoz: { type: "STRING" },
                     tramite: { type: "STRING" },
                     pasos: { type: "ARRAY", items: { type: "STRING" } },
@@ -61,15 +71,28 @@ Deno.serve(async (req) => {
         });
     }
 
-
-  // Rutas para mostrar la página HTML y CSS
+  if (url.pathname.startsWith("/assets/")) {
+  return serveDir(req, {
+    fsRoot: "public/assets",
+    urlRoot: "assets",
+  });
+}
     if (url.pathname === "/styles.css") {
         return new Response(await Deno.readTextFile("./public/styles.css"), {
             headers: { "Content-Type": "text/css" }
         });
     }
 
-    return new Response(await Deno.readTextFile("./public/index.html"), {
+    return new Response(await Deno.readTextFile("./public/asistente.html"), {
         headers: { "Content-Type": "text/html; charset=utf-8" }
     });
+
+    if (url.pathname === "/manifest.json") {
+        return new Response(await Deno.readTextFile("./public/manifest.json"), {
+            headers: { "Content-Type": "application/manifest+json" }
+    });
+}
+    // return new Response(await Deno.readTextFile("./public/asistente.html"), {
+    //     headers: { "Content-Type": "text/html; charset=utf-8" }
+    // });
 });
