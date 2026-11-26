@@ -17,13 +17,13 @@
     </header>
     <!-- Selector rápido de perfil -->
     <select id="perfil">
-      <option value="Adulto mayor">Soy Adulto Mayor</option>
-      <option value="Estudiante de primera generación">Soy Estudiante</option>
-      <option value="Persona migrante">Soy Persona Migrante</option>
+      <option value="Adulto mayor">Soy adulto mayor</option>
+      <option value="Estudiante de primera generación">Soy estudiante</option>
+      <option value="Persona migrante">Soy persona migrante</option>
     </select>
 
     <!-- Botón principal de Voz -->
-    <button id="btnVoz"> Toca y habla con Atenea en tu idioma</button>
+    <button id="btnVoz">Toca y habla con Atenea en tu idioma</button>
 
     <!-- Opción alternativa de Texto -->
     <input type="text" id="inputTexto" placeholder="O escribe tu duda aquí...">
@@ -69,12 +69,12 @@
           };
           mediaRecorder.start();
           grabando = true;
-          btnVoz.textContent = "Presiona para ENVIAR audio";
+          btnVoz.textContent = "Presiona para enviar audio";
           estado.textContent = "Escuchando...";
         } else {
           mediaRecorder.stop();
           grabando = false;
-          btnVoz.textContent = "Presiona para HABLAR";
+          btnVoz.textContent = "Presiona para hablar";
         }
       };
 
