@@ -1,7 +1,7 @@
-@import url('https://cdn.jsdelivr.net/gh/mshaugh/nerdfont-webfonts@v3.3.0/build/firamono-nerd-font.css');
+@import url("https://cdn.jsdelivr.net/gh/mshaugh/nerdfont-webfonts@v3.3.0/build/firamono-nerd-font.css");
 
 body {
-  font-family: 'FiraMono Nerd Font', monospace;
+  font-family: "FiraMono Nerd Font", monospace;
   max-width: 500px;
   margin: 0 auto;
   padding: 20px;
@@ -56,19 +56,21 @@ button, select, input {
   padding: 20px;
   border-radius: 10px;
   margin-top: 20px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
 .encabezado-atenea {
   display: flex;
   align-items: center; /* Centra verticalmente el logo respecto al bloque de texto */
-  gap: 16px;           /* Espacio entre el logo y los textos */
+  gap: 16px; /* Espacio entre el logo y los textos */
   margin-bottom: 24px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
 }
 
 .logo-atenea {
-  width: 65px;         /* Ajusta este tamaño según el alto de tus textos */
+  width: 65px; /* Ajusta este tamaño según el alto de tus textos */
   height: auto;
   object-fit: contain;
 }
@@ -79,16 +81,16 @@ button, select, input {
 }
 
 .textos-atenea h1 {
-  margin: 0;           /* Quita el margen por defecto que separaba mucho ambos textos */
+  margin: 0; /* Quita el margen por defecto que separaba mucho ambos textos */
   font-size: 2.2rem;
   font-weight: 700;
   color: #1a1a1a;
-  line-height: 1.1;    /* Junta el título con el subtítulo */
+  line-height: 1.1; /* Junta el título con el subtítulo */
 }
 
 .textos-atenea p {
-  margin: 4px 0 0 0;   /* Pequeña separación superior */
+  margin: 4px 0 0 0; /* Pequeña separación superior */
   font-size: 1.05rem;
-  font-weight: 400;    /* Peso normal (sin negrita) */
-  color: #555555;      /* Gris medio como en tu imagen objetivo */
+  font-weight: 400; /* Peso normal (sin negrita) */
+  color: #555555; /* Gris medio como en tu imagen objetivo */
 }

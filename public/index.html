@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Atenea</title>
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="./home.css">
 </head>
 <script>
   if ("serviceWorker" in navigator) {
@@ -21,6 +21,16 @@
         <p>Tu guía, a tu ritmo</p>
     </div>
     </header>
-  <button id="btnAsistente">Prefieres hablar? Toca aqui!</button>
+  <h1>Hola soy Atenea.</h1>
+  <h1>En que te guio hoy?</h1>
+  <button id="btnAsistente">Preguntame cualquier cosa sobre tramites!</button>
   <button id="btnFoto">Traduce cualquier documento!</button>
+  <script>
+    document.getElementById("btnAsistente").addEventListener("click", () => {
+      window.location.href = "./asistente.html";
+    });
+    document.getElementById("btnFoto").addEventListener("click", () => {
+      window.location.href = "./foto.html";
+    });
+  </script>
 </body>
