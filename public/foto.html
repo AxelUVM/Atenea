@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atenea</title>
+  <link rel="stylesheet" href="./foto.css">
+</head>
+<body>
+  <header class="encabezado-atenea">
+    <img src="./assets/logo.png" alt="Logo Atenea" class="logo-atenea">
+    <div class="textos-atenea">
+      <h1>Atenea</h1>
+      <p>Tu guía, a tu ritmo</p>
+    </div>
+  </header>
+
+  <h1>Aquí puedes traducir y resumir cualquier documento</h1>
+
+  <select id="idiomaDestino">
+    <option value="Español sencillo (México)">Traducir a: Español</option>
+    <option value="Náhuatl">Traducir a: Náhuatl</option>
+    <option value="Maya yucateco">Traducir a: Maya</option>
+    <option value="Français">Traducir a: Français</option>
+    <option value="English">Traducir a: English</option>
+  </select>
+
+  <!-- Botón de cámara / galería -->
+  <input type="file" id="inputFoto" accept="image/*" capture="environment" style="display: none;">
+  <button id="btnFoto">Tomar o subir foto del documento</button>
+
+  <!-- Vista previa de la foto subida -->
+  <img id="previewFoto" alt="Vista previa del documento">
+
+  <!-- Texto de estado en negro -->
+  <p id="estado"></p>
+
+  <!-- Resultados (mismo diseño que asistente.html) -->
+  <div id="resultado" style="display: none;">
+    <h2 id="resTramite"></h2>
+    <p id="resVoz"></p>
+
+    <div id="bloqueTraduccion">
+      <h3 id="lblTraduccion">Documento traducido:</h3>
+      <p id="resTraduccion"></p>
+    </div>
+
+    <h3 id="lblPasos">Pasos a seguir:</h3>
+    <ol id="resPasos"></ol>
+    <h3 id="lblDocs">Documentos que necesitas:</h3>
+    <ul id="resDocs"></ul>
+    <a id="resLink" href="#" target="_blank">Ir al sitio oficial</a>
+  </div>
+
+  <script>
+    const btnFoto = document.getElementById("btnFoto");
+    const inputFoto = document.getElementById("inputFoto");
+    const previewFoto = document.getElementById("previewFoto");
+    const estado = document.getElementById("estado");
+
+    btnFoto.onclick = () => inputFoto.click();
+
+    inputFoto.onchange = (e) => {
+      const archivo = e.target.files[0];
+      if (!archivo) return;
+
+      const reader = new FileReader();
+      reader.readAsDataURL(archivo);
+      reader.onloadend = async () => {
+        previewFoto.src = reader.result;
+        previewFoto.style.display = "block";
+
+        const [encabezado, base64] = reader.result.split(",");
+        const mimeType = encabezado.match(/:(.*?);/)[1];
+
+        estado.textContent = "Leyendo y traduciendo documento...";
+        document.getElementById("resultado").style.display = "none";
+
+        const res = await fetch("/api/orientar", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            imagenBase64: base64,
+            imagenMimeType: mimeType,
+            perfil: { situacion: "Usuario general" },
+            idiomaDestino: document.getElementById("idiomaDestino").value
+          })
+        });
+
+        const guia = await res.json();
+        estado.textContent = "";
+        mostrarResultado(guia);
+      };
+    };
+
+    function mostrarResultado(guia) {
+      document.getElementById("resultado").style.display = "block";
+      document.getElementById("resTramite").textContent = guia.tramite;
+      document.getElementById("resVoz").textContent = guia.respuestaVoz;
+
+      const bloqueTrad = document.getElementById("bloqueTraduccion");
+      if (guia.traduccionDocumento && guia.traduccionDocumento.trim() !== "") {
+        document.getElementById("lblTraduccion").textContent = guia.tituloTraduccion;
+        document.getElementById("resTraduccion").textContent = guia.traduccionDocumento;
+        bloqueTrad.style.display = "block";
+      } else {
+        bloqueTrad.style.display = "none";
+      }
+
+      document.getElementById("lblPasos").textContent = guia.tituloPasos;
+      document.getElementById("lblDocs").textContent = guia.tituloDocumentos;
+      document.getElementById("resPasos").innerHTML = guia.pasos.map(p => `<li>${p}</li>`).join("");
+      document.getElementById("resDocs").innerHTML = guia.documentos.map(d => `<li>${d}</li>`).join("");
+
+      const link = document.getElementById("resLink");
+      if (guia.enlaceOficial) {
+        link.href = guia.enlaceOficial;
+        link.textContent = guia.textoEnlace;
+        link.style.display = "inline-block";
+      } else {
+        link.style.display = "none";
+      }
+
+      window.speechSynthesis.cancel();
+      if (!guia.esLenguaOriginaria) {
+        const lectura = new SpeechSynthesisUtterance(guia.respuestaVoz);
+        if (guia.codigoIdioma) lectura.lang = guia.codigoIdioma;
+        window.speechSynthesis.speak(lectura);
+      }
+    }
+  </script>
+</body>
+</html>
