@@ -87,10 +87,19 @@ Deno.serve(async (req) => {
     });
 
     if (url.pathname === "/manifest.json") {
-        return new Response(await Deno.readTextFile("./public/manifest.json"), {
-            headers: { "Content-Type": "application/manifest+json" }
+    return new Response(await Deno.readTextFile("./public/manifest.json"), {
+      headers: {
+        "Content-Type": "application/manifest+json",
+        "Access-Control-Allow-Origin": "*"
+      }
     });
-}
+  }
+
+  if (url.pathname === "/sw.js") {
+    return new Response(await Deno.readTextFile("./public/sw.js"), {
+      headers: { "Content-Type": "application/javascript" }
+    });
+  }
     return new Response(await Deno.readTextFile("./public/asistente.html"), {
         headers: { "Content-Type": "text/html; charset=utf-8" }
     });
