@@ -1,0 +1,42 @@
+body {
+  font-family: sans-serif;
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 20px;
+  background: #f4f7f6;
+  color: #1a1a1a;
+  font-size: 18px;
+}
+
+button, select, input {
+  width: 100%;
+  padding: 16px;
+  margin: 10px 0;
+  font-size: 18px;
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  box-sizing: border-box;
+}
+
+#btnVoz {
+  background: #0056b3;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#btnTexto {
+  background: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+#resultado {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin-top: 20px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
