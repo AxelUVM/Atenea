@@ -70,36 +70,64 @@ Deno.serve(async (req) => {
         });
     }
 
-  if (url.pathname.startsWith("/assets/")) {
-  return serveDir(req, {
-    fsRoot: "public/assets",
-    urlRoot: "assets",
-  });
-}
-    if (url.pathname === "/styles.css") {
-        return new Response(await Deno.readTextFile("./public/styles.css"), {
-            headers: { "Content-Type": "text/css" }
-        });
-    }
-
-    return new Response(await Deno.readTextFile("./public/index.html"), {
-        headers: { "Content-Type": "text/html; charset=utf-8" }
-    });
-
-    if (url.pathname === "/manifest.json") {
-    return new Response(await Deno.readTextFile("./public/manifest.json"), {
+if (req.method === "OPTIONS") {
+    return new Response(null, {
       headers: {
-        "Content-Type": "application/manifest+json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Methods": "GET, POST, HEAD, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type"
+      }
+    });
+  }
+
+  // Serve manifest.json
+  if (url.pathname === "/manifest.json") {
+    const manifest = await Deno.readTextFile("./public/manifest.json");
+    return new Response(manifest, {
+      headers: {
+        "Content-Type": "application/manifest+json; charset=utf-8",
         "Access-Control-Allow-Origin": "*"
       }
     });
   }
 
+  // Serve Service Worker
   if (url.pathname === "/sw.js") {
-    return new Response(await Deno.readTextFile("./public/sw.js"), {
-      headers: { "Content-Type": "application/javascript" }
+    const sw = await Deno.readTextFile("./public/sw.js");
+    return new Response(sw, {
+      headers: {
+        "Content-Type": "application/javascript; charset=utf-8",
+        "Access-Control-Allow-Origin": "*"
+      }
     });
   }
+
+  // Serve Logo
+  if (url.pathname === "/assets/logo.png") {
+    const img = await Deno.readFile("./public/assets/logo.png");
+    return new Response(img, {
+      headers: {
+        "Content-Type": "image/png",
+        "Access-Control-Allow-Origin": "*"
+      }
+    });
+  }
+
+  // Serve CSS
+  if (url.pathname === "/styles.css") {
+    const css = await Deno.readTextFile("./public/styles.css");
+    return new Response(css, {
+      headers: { "Content-Type": "text/css; charset=utf-8" }
+    });
+  }
+
+  // ... your POST /api/orientar route stays here ...
+
+  // Default: Serve index.html
+  const html = await Deno.readTextFile("./public/asistente.html");
+  return new Response(html, {
+    headers: { "Content-Type": "text/html; charset=utf-8" }
+  });
     return new Response(await Deno.readTextFile("./public/asistente.html"), {
         headers: { "Content-Type": "text/html; charset=utf-8" }
     });
